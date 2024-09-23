@@ -269,9 +269,18 @@ app.post('/add-user', async (req, res) => {
 });
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.post('/upload', upload.single('file'), (req, res) => {
-  console.log(req.file);
-  res.send('File uploaded successfully');
+const baseUrl = process.env.NODE_ENV === 'production' 
+  ? 'http://13.60.250.221:3000/' 
+  : 'http://localhost:3000/';
+
+app.post('/upload', upload.single('imageUrl'), (req, res) => {
+  if (req.file) {
+    // Construct the full image URL using the base URL
+    const imageUrl = `${baseUrl}${req.file.path.replace(/\\/g, '/')}`;
+    res.send({ imageUrl });
+  } else {
+    res.status(400).send('No file uploaded.');
+  }
 });
 
 app.post('/add-developer', isAdmin, upload.single('logo'), async (req, res) => {
