@@ -13,7 +13,7 @@ const fs = require('fs');
 require('dotenv').config();
 const Blog = require('./models/Blog'); // Adjust the path as necessary
 const blogRoutes = require('./routes/blog');
-
+ 
 const uploadsDir = path.join(__dirname, 'uploads');
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
@@ -21,7 +21,7 @@ if (!fs.existsSync(uploadsDir)) {
 } else {
   console.log('Uploads directory already exists');
 }
-
+ 
 // Configure multer storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -36,7 +36,7 @@ const upload = multer({
   storage: storage,
   limits: { fileSize: 50 * 1024 * 1024 } // Set file size limit (5 MB)
 });
-
+ 
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use('/images', express.static(path.join(__dirname, 'images')));
@@ -85,7 +85,7 @@ app.get('/add', isAdmin, async (req, res) => {
   try {
     const developers = await Developer.find(); // Assuming 'Developer' is your model
     const property = await Property.find();
-    res.render('add', { developers, property });
+    res.render('add', { developers,property });
   } catch (err) {
     res.status(500).send("Error fetching developers");
   }
@@ -269,18 +269,9 @@ app.post('/add-user', async (req, res) => {
 });
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-const baseUrl = process.env.NODE_ENV === 'production' 
-  ? 'http://13.60.250.221:3000/' 
-  : 'http://localhost:3000/';
-
-app.post('/upload', upload.single('imageUrl'), (req, res) => {
-  if (req.file) {
-    // Construct the full image URL using the base URL
-    const imageUrl = `${baseUrl}${req.file.path.replace(/\\/g, '/')}`;
-    res.send({ imageUrl });
-  } else {
-    res.status(400).send('No file uploaded.');
-  }
+app.post('/upload', upload.single('file'), (req, res) => {
+  console.log(req.file);
+  res.send('File uploaded successfully');
 });
 
 app.post('/add-developer', isAdmin, upload.single('logo'), async (req, res) => {
@@ -298,7 +289,7 @@ app.post('/add-developer', isAdmin, upload.single('logo'), async (req, res) => {
   console.log('File:', req.file);  // Log the file object for debugging
 
   // Ensure logo is handled correctly
-  const logoPath = req.file ? `http://localhost:3000/${req.file.path.replace(/\\/g, '/')}` : '';
+  const logoPath = req.file ? `http://localhost:3000/${req.file.path.replace(/\\/g, '/')}` : ''; 
   console.log('Logo Path:', logoPath);  // Log the logo path for debugging
 
   // Create a new Developer with the provided data
@@ -329,11 +320,11 @@ app.get('/add-developer', (req, res) => {
 });
 
 
-app.get("/about", (req, res) => {
+app.get("/about",(req,res)=>{
   res.render('about')
 })
 
-app.get('/contact', (req, res) => {
+app.get('/contact',(req,res)=>{
   res.render("contact")
 })
 
@@ -357,7 +348,7 @@ app.get('/developer/:id', async (req, res) => {
     const developerId = req.params.id;
     const developer = await Developer.findById(developerId);
     const properties = await Property.find({ developer: req.params.id }).populate('developer');
-
+    
     if (!developer) {
       return res.status(404).send('Developer not found');
     }
@@ -369,13 +360,13 @@ app.get('/developer/:id', async (req, res) => {
   }
 });
 
-
+ 
 app.get('/', async (req, res) => {
   try {
     // Extract and sanitize query parameters
     const selectedCategories = req.query.categories ? req.query.categories.split(',').map(cat => cat.trim()) : [];
     const searchQuery = req.query.search ? sanitizeHtml(req.query.search) : '';
-
+ 
     // Build property filter
     let propertyFilter = {};
 
@@ -391,7 +382,7 @@ app.get('/', async (req, res) => {
     }
 
     // Fetch data from database
-    const [allProperties, allDevelopers, allTests, locations, developer] = await Promise.all([
+    const [allProperties, allDevelopers, allTests, locations,developer] = await Promise.all([
       Property.find(propertyFilter),
       Developer.find(),
       Test.find(),
@@ -409,7 +400,7 @@ app.get('/', async (req, res) => {
       premium: allProperties.filter(p => p.categories.includes('Premium Project')),
       affordable: allProperties.filter(p => p.categories.includes('Affordable Project')),
     };
-
+   
     // Render the view
     res.render('index', {
       properties: categorizedProperties,
@@ -418,7 +409,7 @@ app.get('/', async (req, res) => {
       isAdmin: req.session.isAdmin,
       searchQuery: searchQuery,
       selectedCategories: selectedCategories,
-      locations: locations,
+      locations: locations ,
       developer,
     });
   } catch (err) {
@@ -430,42 +421,42 @@ app.get('/', async (req, res) => {
 app.get('/property/:id', async (req, res) => {
   console.log('Received request for /property/:id');
   try {
-    const propertyId = req.params.id;
-    console.log('Property ID:', propertyId);
+      const propertyId = req.params.id;
+      console.log('Property ID:', propertyId);
 
-    // Validate ObjectId
-    if (!mongoose.Types.ObjectId.isValid(propertyId)) {
-      console.error('Invalid property ID:', propertyId);
-      return res.status(400).send('Invalid property ID');
-    }
+      // Validate ObjectId
+      if (!mongoose.Types.ObjectId.isValid(propertyId)) {
+          console.error('Invalid property ID:', propertyId);
+          return res.status(400).send('Invalid property ID');
+      }
 
-    // Fetch the property and populate developer
-    const property = await Property.findById(propertyId).populate('developer');
+      // Fetch the property and populate developer
+      const property = await Property.findById(propertyId).populate('developer');
+      
+      if (!property) {
+          console.error('Property not found for ID:', propertyId);
+          return res.status(404).send('Property not found');
+      }
 
-    if (!property) {
-      console.error('Property not found for ID:', propertyId);
-      return res.status(404).send('Property not found');
-    }
+      // Prepare categorized properties (if needed)
+      const categorizedProperties = {
+          trending: property.categories.includes('Trending') ? [property] : [],
+          ultra: property.categories.includes('Ultra luxury') ? [property] : [],
+          luxury: property.categories.includes('Luxury Project') ? [property] : [],
+          premium: property.categories.includes('Premium Project') ? [property] : [],
+          affordable: property.categories.includes('Affordable Project') ? [property] : [],
+      };
 
-    // Prepare categorized properties (if needed)
-    const categorizedProperties = {
-      trending: property.categories.includes('Trending') ? [property] : [],
-      ultra: property.categories.includes('Ultra luxury') ? [property] : [],
-      luxury: property.categories.includes('Luxury Project') ? [property] : [],
-      premium: property.categories.includes('Premium Project') ? [property] : [],
-      affordable: property.categories.includes('Affordable Project') ? [property] : [],
-    };
-
-    // Render the EJS template with the property and its developer
-    res.render('property', {
-      categories: categorizedProperties,
-      property,
-      developer: property.developer // Use the populated developer directly
-    });
+      // Render the EJS template with the property and its developer
+      res.render('property', {
+          categories: categorizedProperties,
+          property,
+          developer: property.developer // Use the populated developer directly
+      });
 
   } catch (err) {
-    console.error('Error fetching property:', err);
-    res.status(500).send('Server Error');
+      console.error('Error fetching property:', err);
+      res.status(500).send('Server Error');
   }
 });
 
@@ -632,7 +623,7 @@ app.post('/admin/update/property/:id', isAdmin, upload.single('imageUrl'), async
       logoText10,
       icon,
       updatedat: new Date(), // Update to the current date
-      imageUrl: req.file ? req.file.path : undefined,// Update image URL if a file is uploaded
+      imageUrl: req.file ? req.file.path : undefined ,// Update image URL if a file is uploaded
       Plogo: req.file ? req.file.path : undefined // Update image URL if a file is uploaded
     }, { new: true });
 
@@ -722,7 +713,7 @@ app.post('/add', isAdmin, upload.fields([
       logoText10,
       icon,
     } = req.body;
-
+ 
     // Retrieve file paths from req.files
     const floorImgs = [];
     for (let i = 1; i <= 10; i++) {
@@ -755,21 +746,13 @@ app.post('/add', isAdmin, upload.fields([
     }
 
     const parsedCategories = Array.isArray(categories) ? categories : categories ? categories.split(',') : [];
-    const baseUrl = process.env.NODE_ENV === 'production'
-      ? 'http://13.60.250.221:3000/'
-      : 'http://localhost:3000/';
 
     const newProperty = new Property({
-      baseUrl : process.env.NODE_ENV === 'production'
-      ? 'http://13.60.250.221:3000/'
-      : 'http://localhost:3000/',
-      imageUrl : req.files['imageUrl']
-        ? `${baseUrl}${req.files['imageUrl'][0].path.replace(/\\/g, '/')}`
-        : '',
-      Plogo: req.files['Plogo'] ? `http://localhost:3000/${req.files['Plogo'][0].path.replace(/\\/g, '/')}` : '',
+      imageUrl: req.files['imageUrl'] ? `http://13.60.250.221:3000//${req.files['imageUrl'][0].path.replace(/\\/g, '/')}` : '',
+      Plogo: req.files['Plogo'] ? `http://13.60.250.221:3000/${req.files['Plogo'][0].path.replace(/\\/g, '/')}` : '',
       icon: req.files['icon'] ? `http://localhost:3000/${req.files['icon'][0].path.replace(/\\/g, '/')}` : '',
       rera: req.files['rera'] ? `http://localhost:3000/${req.files['rera'][0].path.replace(/\\/g, '/')}` : '',
-      locationImage: req.files['locationImage'] ? `http://localhost:3000/${req.files['locationImage'][0].path.replace(/\\/g, '/')}` : '',
+      locationImage: req.files['locationImage'] ? `http://13.60.250.221:3000/${req.files['locationImage'][0].path.replace(/\\/g, '/')}` : '',
       name,
       developer: req.body.developerId, // Use the developerId from the form submission
       location,
@@ -896,7 +879,7 @@ app.get('/admin', async (req, res) => {
 app.get('/admin/edit/:id', async (req, res) => {
   const blog = await Blog.findById(req.params.id);
   if (!blog) {
-    return res.status(404).send('Blog not found');
+      return res.status(404).send('Blog not found');
   }
   res.render('edit', { blog }); // Create an edit.ejs file for the edit form
 });
@@ -907,7 +890,7 @@ app.post('/admin/edit/:id', upload.single('image'), async (req, res) => {
   const updatedData = { heading, about };
 
   if (req.file) {
-    updatedData.image = req.file.path.replace(/\\/g, '/'); // Ensure proper path format
+      updatedData.image = req.file.path.replace(/\\/g, '/'); // Ensure proper path format
   }
 
   await Blog.findByIdAndUpdate(req.params.id, updatedData);
@@ -920,6 +903,6 @@ app.post('/admin/delete/:id', async (req, res) => {
   res.redirect('/admin'); // Redirect back to admin page
 });
 
-app.get('/career', (req, res) => {
+app.get('/career',(req,res)=>{
   res.render('career')
 }) 
