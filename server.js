@@ -289,7 +289,7 @@ app.post('/add-developer', isAdmin, upload.single('logo'), async (req, res) => {
   console.log('File:', req.file);  // Log the file object for debugging
 
   // Ensure logo is handled correctly
-  const logoPath = req.file ? `http://localhost:3000/${req.file.path.replace(/\\/g, '/')}` : ''; 
+  const logoPath = req.file ? `http://13.60.250.221:3000/${req.file.path.replace(/\\/g, '/')}` : ''; 
   console.log('Logo Path:', logoPath);  // Log the logo path for debugging
 
   // Create a new Developer with the provided data
@@ -494,7 +494,7 @@ app.post('/admin/update/developer/:id', isAdmin, upload.single('logo'), async (r
     let logoPath = req.body.logo; // Use existing logo if no new file is uploaded
 
     if (req.file) {
-      logoPath = `http://localhost:3000/${req.file.path.replace(/\\/g, '/')}`; // Adjust path for your setup
+      logoPath = `http://13.60.250.221:3000/${req.file.path.replace(/\\/g, '/')}`; // Adjust path for your setup
     }
 
     const updatedDeveloper = await Developer.findByIdAndUpdate(id, {
@@ -748,10 +748,10 @@ app.post('/add', isAdmin, upload.fields([
     const parsedCategories = Array.isArray(categories) ? categories : categories ? categories.split(',') : [];
 
     const newProperty = new Property({
-      imageUrl: req.files['imageUrl'] ? `http://13.60.250.221:3000//${req.files['imageUrl'][0].path.replace(/\\/g, '/')}` : '',
+      imageUrl: req.files['imageUrl'] ? `http://13.60.250.221:3000/${req.files['imageUrl'][0].path.replace(/\\/g, '/')}` : '',
       Plogo: req.files['Plogo'] ? `http://13.60.250.221:3000/${req.files['Plogo'][0].path.replace(/\\/g, '/')}` : '',
-      icon: req.files['icon'] ? `http://localhost:3000/${req.files['icon'][0].path.replace(/\\/g, '/')}` : '',
-      rera: req.files['rera'] ? `http://localhost:3000/${req.files['rera'][0].path.replace(/\\/g, '/')}` : '',
+      icon: req.files['icon'] ? `http://13.60.250.221:3000/${req.files['icon'][0].path.replace(/\\/g, '/')}` : '',
+      rera: req.files['rera'] ? `http://13.60.250.221:3000/${req.files['rera'][0].path.replace(/\\/g, '/')}` : '',
       locationImage: req.files['locationImage'] ? `http://13.60.250.221:3000/${req.files['locationImage'][0].path.replace(/\\/g, '/')}` : '',
       name,
       developer: req.body.developerId, // Use the developerId from the form submission
@@ -787,16 +787,16 @@ app.post('/add', isAdmin, upload.fields([
       booking,
       token,
       plans,
-      floorImg1: req.files['floorImg1'] ? `http://localhost:3000/${req.files['floorImg1'][0].path.replace(/\\/g, '/')}` : '',
-      floorImg2: req.files['floorImg2'] ? `http://localhost:3000/${req.files['floorImg2'][0].path.replace(/\\/g, '/')}` : '',
-      floorImg3: req.files['floorImg3'] ? `http://localhost:3000/${req.files['floorImg3'][0].path.replace(/\\/g, '/')}` : '',
-      floorImg4: req.files['floorImg4'] ? `http://localhost:3000/${req.files['floorImg4'][0].path.replace(/\\/g, '/')}` : '',
-      floorImg5: req.files['floorImg5'] ? `http://localhost:3000/${req.files['floorImg5'][0].path.replace(/\\/g, '/')}` : '',
-      floorImg6: req.files['floorImg6'] ? `http://localhost:3000/${req.files['floorImg6'][0].path.replace(/\\/g, '/')}` : '',
-      floorImg7: req.files['floorImg7'] ? `http://localhost:3000/${req.files['floorImg7'][0].path.replace(/\\/g, '/')}` : '',
-      floorImg8: req.files['floorImg8'] ? `http://localhost:3000/${req.files['floorImg8'][0].path.replace(/\\/g, '/')}` : '',
-      floorImg9: req.files['floorImg9'] ? `http://localhost:3000/${req.files['floorImg9'][0].path.replace(/\\/g, '/')}` : '',
-      floorImg10: req.files['floorImg10'] ? `http://localhost:3000/${req.files['floorImg10'][0].path.replace(/\\/g, '/')}` : '',
+      floorImg1: req.files['floorImg1'] ? `http://13.60.250.221:3000/${req.files['floorImg1'][0].path.replace(/\\/g, '/')}` : '',
+      floorImg2: req.files['floorImg2'] ? `http://13.60.250.221:3000/${req.files['floorImg2'][0].path.replace(/\\/g, '/')}` : '',
+      floorImg3: req.files['floorImg3'] ? `http://13.60.250.221:3000/${req.files['floorImg3'][0].path.replace(/\\/g, '/')}` : '',
+      floorImg4: req.files['floorImg4'] ? `http://13.60.250.221:3000/${req.files['floorImg4'][0].path.replace(/\\/g, '/')}` : '',
+      floorImg5: req.files['floorImg5'] ? `http://13.60.250.221:3000/${req.files['floorImg5'][0].path.replace(/\\/g, '/')}` : '',
+      floorImg6: req.files['floorImg6'] ? `http://13.60.250.221:3000/${req.files['floorImg6'][0].path.replace(/\\/g, '/')}` : '',
+      floorImg7: req.files['floorImg7'] ? `http://13.60.250.221:3000/${req.files['floorImg7'][0].path.replace(/\\/g, '/')}` : '',
+      floorImg8: req.files['floorImg8'] ? `http://13.60.250.221:3000/${req.files['floorImg8'][0].path.replace(/\\/g, '/')}` : '',
+      floorImg9: req.files['floorImg9'] ? `http://13.60.250.221:3000/${req.files['floorImg9'][0].path.replace(/\\/g, '/')}` : '',
+      floorImg10: req.files['floorImg10'] ? `http://13.60.250.221:3000/${req.files['floorImg10'][0].path.replace(/\\/g, '/')}` : '',
       amenities,
       virtual,
       categories: parsedCategories,
