@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer Details</title>
+</head>
+<body>
+    <h1>Developer Details</h1>
+    <p><strong>Name:</strong> <%= developer.name %></p>
+    <p><strong>Language:</strong> <%= developer.language %></p>
+    <p><strong>About:</strong> <%= developer.about || 'N/A' %></p>
+
+    <h2>Properties by This Developer</h2>
+
+    <div>
+        <h3>Plan A</h3>
+        <ul>
+            <% properties.filter(property => property.plan === 'Plan A').forEach(property => { %>
+                <li>
+                    <strong>Name:</strong> <%= property.name %>, 
+                    <strong>Price:</strong> $<%= property.price %>
+                </li>
+            <% }); %>
+            <% if (properties.filter(property => property.plan === 'Plan A').length === 0) { %>
+                <li>No properties found for Plan A.</li>
+            <% } %>
+        </ul>
+    </div>
+
+    <div>
+        <h3>Plan B</h3>
+        <ul>
+            <% properties.filter(property => property.plan === 'Plan B').forEach(property => { %>
+                <li>
+                    <strong>Name:</strong> <%= property.name %>, 
+                    <strong>Price:</strong> $<%= property.price %>
+                </li>
+            <% }); %>
+            <% if (properties.filter(property => property.plan === 'Plan B').length === 0) { %>
+                <li>No properties found for Plan B.</li>
+            <% } %>
+        </ul>
+    </div>
+
+    <a href="/developers">Back to Developers</a>
+</body>
+</html>

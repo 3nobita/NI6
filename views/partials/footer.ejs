@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Footer</title>
+    <style>
+        .footerh {
+            color: #ffffff;
+        }
+
+        footer {
+            background-color: #000000;
+            color: white;
+            padding: 20px 0;
+        }
+
+        /* footer */
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin: 10px;
+        }
+
+        .footer-section h3 {
+            border-bottom: 1px solid white;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+
+        .company-info {
+            max-width: 300px;
+        }
+
+        .company-info .logo {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        .contact-info p,
+        .social-media p {
+            margin: 10px 0;
+        }
+
+        .contact-info img,
+        .social-media img {
+            width: 20px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .social-media img {
+            margin: 0 5px;
+        }
+
+        .quick-links ul,
+        .properties ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .quick-links ul li,
+        .properties ul li {
+            margin: 5px 0;
+        }
+
+        /* project */
+        .Project {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+            margin-right: 5%;
+            margin-left: 5%;
+            padding-left: 25px;
+        }
+
+        .container-Project {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+
+        }
+
+        .card-Project {
+            display: flex;
+            width: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            /* align-items: center; */
+            gap: 20px;
+        }
+
+        .card-Project:hover {
+            transform: scale(1.05);
+        }
+
+        .card-Project img {
+            width: 100px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .info-Project {
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .info-Project h2 {
+            margin: 0;
+            font-size: 1.2em;
+        }
+
+        .info-Project p {
+            color: #666;
+            margin: 5px 0 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section company-info">
+                <img src="https://static.vecteezy.com/system/resources/previews/011/759/910/original/ni-n-i-letter-logo-design-initial-letter-ni-uppercase-monogram-logo-white-color-ni-logo-n-i-design-ni-n-i-vector.jpg"
+                    alt="NI Realty Logo" class="logo">
+                <p>NI Realty is one of the fastest growing companies in real estate arena offering comprehensive real
+                    estate
+                    solutions to fulfill myriad requirements of customers.</p>
+                <div class="contact-info">
+                    <p><img src="https://cdn4.iconfinder.com/data/icons/social-media-logos-6/512/112-gmail_email_mail-512.png"
+                            alt="Email"> info@nirealty.in</p>
+                    <p><img src="https://i.pinimg.com/originals/83/75/be/8375be4e0fe42e7c3284384200b6bc2b.png"
+                            alt="Phone">78909-93355</p>
+                </div>
+                <div class="social-media">
+                    <p>Follow us</p>
+                    <img src="https://z-m-static.xx.fbcdn.net/rsrc.php/v3/yD/r/5D8s-GsHJlJ.png" alt="Social Media">
+                    <img src="https://i.pinimg.com/736x/2c/da/19/2cda1925dcf4fb8f0644413f49671ffa.jpg"
+                        alt="Social Media">
+                    <img src="https://i.pinimg.com/736x/ee/af/9c/eeaf9ce3ab22ecb3904daea1b2eab04a.jpg"
+                        alt="Social Media">
+                    <img src="https://downloadr2.apkmirror.com/wp-content/uploads/2014/10/543d316f321fb.png"
+                        alt="Social Media">
+                </div>
+            </div>
+            <div class="footer-section quick-links">
+                <h3 class="footerh">QUICK LINKS</h3>
+                <ul>
+                    <li><a href="/about">About us</a></li>
+                    <li>Our Projects</li>
+                    <li>Careers</li>
+                    <li>Privacy Policy</li>
+                    <li>Terms & Condition</li>
+                    <li><a href="/contact">Contact us</a></li>
+                </ul>
+                <p>38, Ground Floor, Holding No 3L, K/299, Main Road, Hatiara, Newtown, Kolkata, West Bengal 700157</p>
+            </div>
+            <div class="footer-section properties">
+                <h3 class="footerh">PROPERTIES IN KOLKATA</h3>
+                <ul>
+                    <li>Property in Alipore</li>
+                    <li>Property in Birati</li>
+                    <li>Property in Howrah</li>
+                    <li>Property in Lake Town</li>
+                    <li>Property in New Town</li>
+                    <li>Property in Serampore</li>
+                    <li>Property in Bablatala</li>
+                    <li>Property in Bishnupur</li>
+                    <li>Property in Jessore Road</li>
+                    <li>Property in Machuabazar</li>
+                    <li>Property in New Town Action Area-I</li>
+                    <li>Property in Shyam Nagar</li>
+                    <li>Property in Baguihati</li>
+                    <li>Property in BT Road</li>
+                    <li>Property in Joka</li>
+                    <li>Property in Madhyamgram</li>
+                    <li>Property in Park Circus</li>
+                    <li>Property in Sodepur</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <p style="text-align: center;">Copyright © 2024 NI Realty. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Header</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap');
+
+        :root {
+            --font-family: 'Roboto', sans-serif;
+            --font-size-base: 0.925rem;
+            --base-color: #2a6e4e;
+            --text-dark: #000000;
+            --border-color: #eceef3;
+
+            --navbar-body-color: #fff;
+            --navbar-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --navbar-padding-y: 1rem;
+            --navbar-padding-x: 1.15rem;
+
+            --navbar-link-hover: var(--base-color);
+            --navbar-link-padding-y: 0.5rem;
+            --navbar-link-padding-x: 1rem;
+
+            --navbar-dropdown-padding-y: 0.5rem;
+            --navbar-dropdown-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+            --navbar-dropdown-radius: 0.75rem;
+
+            --navbar-dropdown-item-padding-y: 0.25rem;
+            --navbar-dropdown-item-padding-x: 1rem;
+
+            --navbar-dropdown-separator-margin-y: 9px;
+            --navbar-dropdown-separator-color: var(--border-color);
+        }
+        
+
+        * {
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            padding: 0;
+            margin: 0;
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .container {
+            /* width: 1170px; */
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        /* Start navbar */
+
+        .navbar,
+        .navbar>.container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 768px) {
+
+            .navbar,
+            .navbar>.container {
+                display: block;
+            }
+        }
+
+        .navbar {
+            box-shadow: var(--navbar-shadow);
+            background-color: #ffffff;
+            padding: var(--navbar-padding-y) var(--navbar-padding-x);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        @media (min-width: 576px) {
+            .navbar .container {
+                max-width: 540px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .navbar .container {
+                max-width: 720px;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .navbar .container {
+                max-width: 960px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .navbar .container {
+                max-width: 1140px;
+            }
+        }
+
+        /* Start navbar logo or brand etc.. */
+        .navbar-header {
+            display: flex;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-header {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                flex-direction: row-reverse;
+            }
+        }
+
+        .navbar-toggler {
+            cursor: pointer;
+            border: none;
+            display: none;
+            outline: none;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-toggler {
+                display: block;
+            }
+        }
+
+        .navbar-toggler span {
+            height: 2px;
+            width: 22px;
+            background-color: rgba(60, 66, 80, 0.65);
+            /* lighten($text-dark, 35%) equivalent */
+            display: block;
+        }
+
+        .navbar-toggler span:not(:last-child) {
+            margin-bottom: 0.2rem;
+        }
+
+        .navbar-header>a {
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        /* Start navbar menu */
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+            flex-basis: auto;
+            flex-grow: 1;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-menu {
+                display: none;
+                text-align: center;
+            }
+        }
+
+        .navbar-menu.active {
+            display: flex !important;
+        }
+
+        .navbar-nav {
+            margin-left: auto;
+            flex-direction: row;
+            display: flex;
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-nav {
+                width: 100%;
+                display: block;
+                border-top: 1px solid #EEE;
+                margin-top: 1rem;
+            }
+        }
+
+        .navbar-nav>li>a {
+            color: var(--text-dark);
+            text-decoration: none;
+            display: inline-block;
+            padding: var(--navbar-link-padding-y) var(--navbar-link-padding-x);
+        }
+
+        .navbar-nav>li>a:hover {
+            color: var(--navbar-link-hover);
+        }
+
+        @media (max-width: 768px) {
+            .navbar-nav>li>a {
+                border-bottom: 1px solid var(--border-color);
+            }
+        }
+
+        .navbar-nav>li.active>a {
+            color: var(--base-color);
+        }
+
+        .navbar-dropdown .dropdown {
+            list-style: none;
+            position: absolute;
+            top: 150%;
+            left: 0;
+            background-color: #fff;
+            padding-top: var(--navbar-dropdown-padding-y);
+            padding-bottom: var(--navbar-dropdown-padding-y);
+            min-width: 160px;
+            width: auto;
+            white-space: nowrap;
+            box-shadow: var(--navbar-dropdown-shadow);
+            z-index: 99999;
+            border-radius: var(--navbar-dropdown-radius);
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-dropdown .dropdown {
+                position: relative;
+                box-shadow: none;
+            }
+        }
+
+        .navbar-dropdown .dropdown li a {
+            color: var(--text-dark);
+            padding: var(--navbar-dropdown-item-padding-y) var(--navbar-dropdown-item-padding-x);
+            display: block;
+        }
+
+        .navbar-dropdown .dropdown.show {
+            display: block !important;
+        }
+
+        .dropdown>.separator {
+            height: 1px;
+            width: 100%;
+            margin-top: var(--navbar-dropdown-separator-margin-y);
+            margin-bottom: var(--navbar-dropdown-separator-margin-y);
+            background-color: var(--navbar-dropdown-separator-color);
+        }
+
+        .navbar-dropdown {
+            position: relative;
+        }
+
+        /* Custom */
+        .navbar .navbar-header>a span {
+            color: var(--base-color);
+        }
+
+        .navbar .navbar-header h4 {
+            font-weight: 500;
+            font-size: 1.25rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar .navbar-header h4 {
+                font-size: 1.05rem;
+          
+            }
+        }
+        .login-button {
+            background-color: var(--base-color); /* Use your primary color for consistency */
+            border-radius: 5px; /* Rounded corners */
+            padding: 10px 20px; /* Adequate padding */
+            color: white; /* Text color */
+            text-align: center; /* Center text */
+            display: inline-block; /* Ensure it's inline but allows padding */
+            text-decoration: none; /* Remove underline from link */
+            font-size: 0.9rem; /* Font size */
+            font-weight: 500; /* Font weight */
+            transition: background-color 0.3s ease; /* Smooth background color change on hover */
+            display: flex;
+            justify-content: right;
+        }
+        
+        .login-button:hover {
+            background-color: #1e5d3f; /* Darker shade for hover effect */
+        }
+        
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="container">
+
+            <div class="navbar-header">
+                <button class="navbar-toggler" data-toggle="open-navbar1">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <a href="/">
+                    <h4 style="font-size: 40px; position: relative;left: -5em; ">NlRealty<span></span></h4>
+                </a>
+            </div>
+
+            <div class="navbar-menu" id="open-navbar1">
+                <ul class="navbar-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="/about">About</a></li>
+                    <li><a href="#">Our Projects</a></li>
+                    <li><a href="/career">Careers</a></li>
+                    <li><a  href="/new">Blog</a></li>
+                    <li></li>
+                </ul>
+            </div>
+            <a class="login-button" href="/admin">Login</a>
+
+        </div>
+    </nav>
+
+
+    <script>
+        // Other important pens.
+        // Map: https://codepen.io/themustafaomar/pen/ZEGJeZq
+        // Dashboard: https://codepen.io/themustafaomar/pen/jLMPKm
+
+        let dropdowns = document.querySelectorAll('.navbar .dropdown-toggler')
+        let dropdownIsOpen = false
+
+        // Handle dropdown menues
+        if (dropdowns.length) {
+            // Usually I don't recommend doing this (adding many event listeners to elements have the same handler)
+            // Instead use event delegation: https://javascript.info/event-delegation
+            // Why: https://gomakethings.com/why-event-delegation-is-a-better-way-to-listen-for-events-in-vanilla-js
+            // But since we only have two dropdowns, no problem with that. 
+            dropdowns.forEach((dropdown) => {
+                dropdown.addEventListener('click', (event) => {
+                    let target = document.querySelector(`#${event.target.dataset.dropdown}`)
+
+                    if (target) {
+                        if (target.classList.contains('show')) {
+                            target.classList.remove('show')
+                            dropdownIsOpen = false
+                        } else {
+                            target.classList.add('show')
+                            dropdownIsOpen = true
+                        }
+                    }
+                })
+            })
+        }
+
+        // Handle closing dropdowns if a user clicked the body
+        window.addEventListener('mouseup', (event) => {
+            if (dropdownIsOpen) {
+                dropdowns.forEach((dropdownButton) => {
+                    let dropdown = document.querySelector(`#${dropdownButton.dataset.dropdown}`)
+                    let targetIsDropdown = dropdown == event.target
+
+                    if (dropdownButton == event.target) {
+                        return
+                    }
+
+                    if ((!targetIsDropdown) && (!dropdown.contains(event.target))) {
+                        dropdown.classList.remove('show')
+                    }
+                })
+            }
+        })
+
+        // Open links in mobiles
+        function handleSmallScreens() {
+            document.querySelector('.navbar-toggler')
+                .addEventListener('click', () => {
+                    let navbarMenu = document.querySelector('.navbar-menu')
+
+                    if (!navbarMenu.classList.contains('active')) {
+                        navbarMenu.classList.add('active')
+                    } else {
+                        navbarMenu.classList.remove('active')
+                    }
+                })
+        }
+
+        handleSmallScreens()
+
+    </script>
+</body>
+
+</html>

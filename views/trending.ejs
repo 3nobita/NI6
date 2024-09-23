@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Blogs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .blog-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        img {
+            max-width: 100%;
+            border-radius: 4px;
+        }
+        p {
+            color: #555;
+        }
+        .blog-item {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Trending Blogs</h1>
+    <a href="/">Back to Blog List</a>
+    <div class="blog-container">
+        <% blogs.forEach(blog => { %>
+            <div class="blog-item">
+                <h2><a href="/<%= blog._id %>" class="blog-link"><%= blog.heading %></a></h2>
+                <img src="<%= blog.image %>" alt="Blog Image">
+                <p><%= blog.about %></p>
+                <p><em><%= blog.date %></em></p>
+            </div>
+        <% }) %>
+    </div>
+
+    <script>
+        const blogLinks = document.querySelectorAll('.blog-link');
+
+        blogLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                const blogHeading = event.target.innerText;
+                alert(`You clicked on: ${blogHeading}`);
+            });
+        });
+    </script>
+</body>
+</html>
